@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 	data = malloc(sizeof(t_data));
 	if (data == NULL)
 		return (1);
+	// parsing required
 	if (argc != 5 && argc != 6)
 		return (1);
 	data_init(data, argv, argc);
