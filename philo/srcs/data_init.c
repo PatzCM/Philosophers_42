@@ -9,7 +9,7 @@
 /*   Updated: 2025/03/15 22:29:43 by palexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../incs/philosophers.h"
 
 int	data_init(t_data *data, char **argv, int ac)
 {
@@ -23,16 +23,16 @@ int	data_init(t_data *data, char **argv, int ac)
 	else
 		data->must_eat_count = -1;
 	if (allocate_memory(data, data->philo_count) != 0)
-		return(printf("Error: malloc\n"));
+		return (printf("Error: malloc\n"));
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->status, NULL);
 	data->start_time = 0;
 	return (0);
 }
 
-int	allocate_memory(t_data *data, int	phil_nbr)
+int	allocate_memory(t_data *data, int phil_nbr)
 {
-	data->thread = malloc(sizeof(pthread_t) * phil_nbr);	
+	data->thread = malloc(sizeof(pthread_t) * phil_nbr);
 	if (data->thread == NULL)
 		return (ERROR_MALLOC);
 	data->philo = malloc(sizeof(t_philo) * phil_nbr);
@@ -43,10 +43,11 @@ int	allocate_memory(t_data *data, int	phil_nbr)
 		return (free(data->thread), free(data->philo), ERROR_MALLOC);
 	return (0);
 }
+
 void	philo_init(t_data *data)
 {
-	int i;
-	t_philo *philo;
+	int		i;
+	t_philo	*philo;
 
 	i = 0;
 	philo = data->philo;
@@ -63,8 +64,8 @@ void	philo_init(t_data *data)
 
 void	philo_mutex(t_data *data)
 {
-	int i;
-	t_philo *philo;
+	int			i;
+	t_philo		*philo;
 
 	philo = data->philo;
 	i = -1;
@@ -72,8 +73,8 @@ void	philo_mutex(t_data *data)
 		pthread_mutex_init(&data->forks[i], NULL);
 	i = 0;
 	philo[0].right_fork = &data->forks[0];
-		if (data->philo_count == 1)
-			return ; 
+	if (data->philo_count == 1)
+		return ;
 	philo[0].left_fork = &data->forks[data->philo_count - 1];
 	while (++i < data->philo_count)
 	{
@@ -89,4 +90,3 @@ void	philo_mutex(t_data *data)
 		}
 	}
 }
-

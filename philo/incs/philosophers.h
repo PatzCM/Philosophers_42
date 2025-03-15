@@ -96,6 +96,7 @@ void	print_msg(t_data *data, t_philo *phil, char *status);
 void	eat(t_philo *philo);
 void	philo_mutex(t_data *data);
 void	p_sleep(t_philo *philo);
+void	p_free(t_data *data);
 
 
 #endif

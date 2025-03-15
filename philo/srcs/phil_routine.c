@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
-
+#include "../incs/philosophers.h"
 
 void	eat(t_philo *philo)
 {
@@ -30,9 +29,9 @@ void	eat(t_philo *philo)
 
 void	*philo_routine(void *phil_arg)
 {
-	t_philo *philo;
-	philo = (t_philo *)phil_arg;
+	t_philo	*philo;
 
+	philo = (t_philo *)phil_arg;
 	pthread_mutex_lock(&philo->data->status);
 	pthread_mutex_unlock(&philo->data->status);
 	philo->last_eat = philo->data->start_time;
@@ -40,7 +39,7 @@ void	*philo_routine(void *phil_arg)
 	{
 		print_msg(philo->data, philo, FORK);
 		ft_usleep(philo->data->time_to_die);
-		return NULL;
+		return (NULL);
 	}
 	if (philo->id % 2 != 0)
 	{
@@ -53,17 +52,18 @@ void	*philo_routine(void *phil_arg)
 		p_sleep(philo);
 		print_msg(philo->data, philo, THINK);
 	}
-	return NULL;
+	return (NULL);
 }
 
 void	philo_monitor(t_data *data)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (1)
 	{
 		if (philo_status(data->philo, data) != ALIVE)
-			break;
+			break ;
 		i++;
 		if (i == data->philo_count)
 			i = 0;
