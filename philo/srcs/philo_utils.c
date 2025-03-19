@@ -6,7 +6,7 @@
 /*   By: palexand <palexand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:46:25 by palexand          #+#    #+#             */
-/*   Updated: 2025/03/15 22:46:26 by palexand         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:54:46 by palexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,20 @@ long	ft_atol(char *str)
 	return (res * sign);
 }
 
+int	p_isdigit(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	print_msg(t_data *data, t_philo *phil, char *status)
 {
 	if (data->philo_dead == ALIVE)
@@ -55,24 +69,6 @@ void	print_msg(t_data *data, t_philo *phil, char *status)
 				data->start_time, phil->id, status);
 		pthread_mutex_unlock(&data->print);
 	}
-}
-
-void	p_free(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->philo_count)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->status);
-	free(data->thread);
-	free(data->philo);
-	free(data->forks);
-	free(data);
 }
 
 int	p_strcmp(const char *s1, const char *s2)

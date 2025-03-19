@@ -6,7 +6,7 @@
 /*   By: palexand <palexand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 20:22:03 by palexand          #+#    #+#             */
-/*   Updated: 2025/03/15 22:37:06 by palexand         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:55:23 by palexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	philo_monitor(t_data *data)
 	i = 0;
 	while (1)
 	{
-		if (philo_status(data->philo, data) != ALIVE)
+		if (philo_status(&data->philo[i], data) != ALIVE)
 			break ;
 		i++;
 		if (i == data->philo_count)

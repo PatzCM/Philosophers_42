@@ -33,7 +33,6 @@
 #                                 libraries                                   #
 #============================================================================*/
 
-
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -46,57 +45,63 @@
 #                                 structs                                     #
 #============================================================================*/
 
-
 typedef struct s_philo
 {
-	int							id;
-	int							eat_count;
-	size_t					last_eat;
-	int							full;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	struct s_data	*data;
-}					t_philo; 
+	int										id;
+	int										eat_count;
+	size_t									last_eat;
+	int										full;
+	pthread_mutex_t							*left_fork;
+	pthread_mutex_t							*right_fork;
+	struct s_data							*data;
+}					t_philo;
 
 typedef struct s_data
 {
-	int				philo_count;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat_count;
-	int				philo_dead;
-	int				philo_full;
-	size_t		start_time;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print;
-	pthread_mutex_t	status;
-	pthread_t		*thread;
-	t_philo			*philo;
+	int							philo_count;
+	int							time_to_die;
+	int							time_to_eat;
+	int							time_to_sleep;
+	int							must_eat_count;
+	int							philo_dead;
+	int							philo_full;
+	size_t						start_time;
+	pthread_mutex_t				*forks;
+	pthread_mutex_t				print;
+	pthread_mutex_t				status;
+	pthread_t					*thread;
+	t_philo						*philo;
 }					t_data;
-
 
 /*============================================================================#
 #                              functions                                     #
 #============================================================================*/
 
-int	allocate_memory(t_data *data, int	phil_nbr);
-
-long		ft_atol(char *str);
+// Memory and initialization functions
 void	philo_init(t_data *data);
-int	data_init(t_data *data, char **argv, int ac);
-size_t	get_current_time(void);
-void	ft_usleep(size_t milliseconds);
-void	*philo_routine(void *phil_arg);
-int philo_status(t_philo *philo, t_data *data);
-void	philo_monitor(t_data *data);
-int philo_thread(t_data *data);
-int		p_strcmp(const char *s1, const char *s2);
-void	print_msg(t_data *data, t_philo *phil, char *status);
-void	eat(t_philo *philo);
+int		allocate_memory(t_data *data, int phil_nbr);
+int		data_init(t_data *data, char **argv, int ac);
+int		philo_thread(t_data *data);
 void	philo_mutex(t_data *data);
-void	p_sleep(t_philo *philo);
 void	p_free(t_data *data);
 
+// Utils functions
+long	ft_atol(char *str);
+int		p_isdigit(char *str);
+int		p_strcmp(const char *s1, const char *s2);
+void	ft_usleep(size_t milliseconds);
+void	print_msg(t_data *data, t_philo *phil, char *status);
+size_t	get_current_time(void);
+
+// Parsing functions
+int		p_parsing(int ac, char **av);
+void	p_error(int error);
+
+// Philophers routine functions
+void	*philo_routine(void *phil_arg);
+int		philo_status(t_philo *philo, t_data *data);
+void	philo_monitor(t_data *data);
+void	eat(t_philo *philo);
+void	p_sleep(t_philo *philo);
 
 #endif

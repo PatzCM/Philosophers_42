@@ -6,7 +6,7 @@
 /*   By: palexand <palexand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 22:50:38 by palexand          #+#    #+#             */
-/*   Updated: 2025/03/15 22:50:38 by palexand         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:45:12 by palexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,46 @@
 int	main(int argc, char **argv)
 {
 	t_data	*data;	
+	int		error;
 
 	data = malloc(sizeof(t_data));
-	if (data == NULL)
-		return (1);
-	// parsing required
-	if (argc != 5 && argc != 6)
-		return (1);
+	if (!data)
+		return (ERROR_MALLOC);
+	error = 0;
+	error = p_parsing(argc, argv);
+	if (error != 0)
+	{
+		printf("Error: %d\n", error);
+		p_error(error);
+		free(data);
+		return (PARSING_ERROR);
+	}
 	data_init(data, argv, argc);
 	philo_init(data);
 	philo_mutex(data);
 	if (philo_thread(data) != 0)
 		return (1);
 	p_free(data);
+}
+
+int	p_parsing(int ac, char **av)
+{
+	int	i;
+
+	i = 1;
+	if (ac < 5 || ac > 6)
+		return (-1);
+	if (ft_atol(av[1]) > 200)
+		return (-3);
+	while (av[i])
+	{
+		if (p_isdigit(av[i]) == 1 || ft_atol(av[i]) < 0)
+			return (-2);
+		if (ft_atol(av[i]) > INT_MAX || ft_atol(av[i]) < INT_MIN)
+			return (-4);
+		i++;
+	}
+	return (0);
 }
 
 int	philo_thread(t_data *data)
