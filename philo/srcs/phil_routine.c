@@ -44,7 +44,7 @@ void	*philo_routine(void *phil_arg)
 	if (philo->id % 2 != 0)
 	{
 		print_msg(philo->data, philo, THINK);
-		ft_usleep(philo->data->time_to_eat);
+		ft_usleep(100);
 	}
 	while (philo->data->philo_dead == ALIVE)
 	{
@@ -75,5 +75,8 @@ void	philo_monitor(t_data *data)
 void	p_sleep(t_philo *philo)
 {
 	print_msg(philo->data, philo, SLEEP);
-	ft_usleep(philo->data->time_to_sleep);
+	if (philo->data->time_to_sleep > philo->data->time_to_die)
+		ft_usleep(philo->data->time_to_die);
+	else
+		ft_usleep(philo->data->time_to_sleep);
 }

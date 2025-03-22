@@ -72,7 +72,7 @@ int	philo_thread(t_data *data)
 	}
 	data->start_time = get_current_time();
 	pthread_mutex_unlock(&data->status);
-	ft_usleep(data->time_to_eat - 10);
+	ft_usleep(data->time_to_die - 10);
 	philo_monitor(data);
 	i = 0;
 	while (i < data->philo_count)
