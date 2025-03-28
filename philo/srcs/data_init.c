@@ -24,7 +24,7 @@ int	data_init(t_data *data, char **argv, int ac)
 	else
 		data->must_eat_count = -1;
 	if (allocate_memory(data, data->philo_count) != 0)
-		return (printf("Error: malloc\n"));
+		return (ERROR_MALLOC);
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->status, NULL);
 	data->start_time = 0;
