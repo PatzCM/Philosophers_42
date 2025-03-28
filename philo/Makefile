@@ -54,12 +54,12 @@ INFO = \033[36mℹ\033[0m
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra -fsanitize=thread
 
 # Directory
 DIR = srcs
 # Source files
-SRCS = $(wildcard $(DIR)/*.c)
+SRCS = $(DIR)/main.c $(DIR)/philo_utils.c $(DIR)/philo_time.c $(DIR)/data_init.c $(DIR)/philo_exit.c $(DIR)/phil_routine.c \
 
 # Object files
 OBJS = $(SRCS:.c=.o)

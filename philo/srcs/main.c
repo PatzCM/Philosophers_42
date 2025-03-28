@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	*data;	
 	int		error;
-
+	
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (ERROR_MALLOC);
@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
 	error = p_parsing(argc, argv);
 	if (error != 0)
 	{
-		printf("Error: %d\n", error);
 		p_error(error);
 		free(data);
 		return (PARSING_ERROR);
@@ -44,6 +43,8 @@ int	p_parsing(int ac, char **av)
 	i = 1;
 	if (ac < 5 || ac > 6)
 		return (-1);
+	if (av[1][0] == '\0' || av[2][0] == '\0' || av[3][0] == '\0' || av[4][0] == '\0')
+		return (-1);
 	if (ft_atol(av[1]) > 200)
 		return (-3);
 	while (av[i])
@@ -61,14 +62,13 @@ int	philo_thread(t_data *data)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	pthread_mutex_lock(&data->status);
-	while (i < data->philo_count)
+	while (++i < data->philo_count)
 	{
 		if (pthread_create(&data->thread[i], NULL,
 				&philo_routine, &data->philo[i]) != 0)
 			return (1);
-		i++;
 	}
 	data->start_time = get_current_time();
 	pthread_mutex_unlock(&data->status);
@@ -93,7 +93,7 @@ int	philo_status(t_philo *philo, t_data *data)
 	int	i;
 
 	i = 0;
-	if (get_current_time() - philo->last_eat > (size_t)data->time_to_die)
+	if (get_current_time() - data->philo->last_eat > (size_t)data->time_to_die)
 	{
 		data->philo_dead = DEAD;
 		return (DEAD);
@@ -103,6 +103,7 @@ int	philo_status(t_philo *philo, t_data *data)
 		data->philo_full++;
 		philo->full = 1;
 	}
+
 	if (data->philo_full == data->philo_count)
 		data->philo_dead = FULL;
 	i = data->philo_dead;

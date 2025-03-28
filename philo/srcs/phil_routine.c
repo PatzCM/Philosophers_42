@@ -67,6 +67,7 @@ void	philo_monitor(t_data *data)
 		i++;
 		if (i == data->philo_count)
 			i = 0;
+
 	}
 	if (data->philo_dead == DEAD)
 		print_msg(data, &data->philo[i], DIED);
