@@ -101,7 +101,8 @@ int	philo_status(t_philo *philo, t_data *data)
 	}
 	else if (philo->eat_count == data->must_eat_count && philo->full == 0)
 	{
-		pthread_mutex_lock(&data->status);
+		/*pthread_mutex_lock(&data->status);*/
+		/*printf("philo->eat_count: %d\n", philo->eat_count);*/
 		data->philo_full++;
 		philo->full = 1;
 	}

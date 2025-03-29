@@ -17,12 +17,16 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
 	print_msg(philo->data, philo, FORK);
 	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(&philo->data->status);
 	print_msg(philo->data, philo, FORK);
-	philo->last_eat = get_current_time();
 	print_msg(philo->data, philo, EAT);
+	pthread_mutex_unlock(&philo->data->status);
 	ft_usleep(philo->data->time_to_eat);
+	pthread_mutex_lock(&philo->data->status);
+	philo->last_eat = get_current_time();
 	if (philo->eat_count < philo->data->must_eat_count)
 		philo->eat_count++;
+	pthread_mutex_unlock(&philo->data->status);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 }
@@ -33,8 +37,8 @@ void	*philo_routine(void *phil_arg)
 
 	philo = (t_philo *)phil_arg;
 	pthread_mutex_lock(&philo->data->status);
-	pthread_mutex_unlock(&philo->data->status);
 	philo->last_eat = philo->data->start_time;
+	pthread_mutex_unlock(&philo->data->status);
 	if (philo->data->philo_count == 1)
 	{
 		print_msg(philo->data, philo, FORK);
@@ -46,11 +50,20 @@ void	*philo_routine(void *phil_arg)
 		print_msg(philo->data, philo, THINK);
 		ft_usleep(100);
 	}
-	while (philo->data->philo_dead == ALIVE)
+	while (1)
 	{
+		pthread_mutex_lock(&philo->data->status);
+		if (philo->data->philo_dead != ALIVE)
+		{
+			pthread_mutex_unlock(&philo->data->status);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->status);
 		eat(philo);
 		p_sleep(philo);
+		pthread_mutex_lock(&philo->data->status);
 		print_msg(philo->data, philo, THINK);
+		pthread_mutex_unlock(&philo->data->status);
 	}
 	return (NULL);
 }
