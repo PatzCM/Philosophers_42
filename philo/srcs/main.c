@@ -71,7 +71,7 @@ int	philo_thread(t_data *data)
 	}
 	data->start_time = get_current_time();
 	pthread_mutex_unlock(&data->status);
-	ft_usleep(data->time_to_die - 10);
+	ft_usleep(1);
 	philo_monitor(data);
 	i = 0;
 	while (i < data->philo_count)
@@ -82,10 +82,6 @@ int	philo_thread(t_data *data)
 	}
 	return (0);
 }
-// the philosophers routine function should be like this:
-// should initialize the philo to eat, sleep and think
-// should check if the philosopher is dead
-// repeat
 
 int	philo_status(t_philo *philo, t_data *data)
 {
@@ -94,7 +90,8 @@ int	philo_status(t_philo *philo, t_data *data)
 	pthread_mutex_lock(&data->status);
 	if (get_current_time() - data->philo->last_eat > (size_t)data->time_to_die)
 	{
-		/*pthread_mutex_lock(&data->status);*/
+		pthread_mutex_unlock(&data->status);
+		pthread_mutex_lock(&data->status);
 		data->philo_dead = DEAD;
 		pthread_mutex_unlock(&data->status);
 		return (DEAD);
@@ -106,7 +103,6 @@ int	philo_status(t_philo *philo, t_data *data)
 		data->philo_full++;
 		philo->full = 1;
 	}
-
 	if (data->philo_full == data->philo_count)
 		data->philo_dead = FULL;
 	i = data->philo_dead;

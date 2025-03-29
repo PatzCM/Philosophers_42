@@ -90,7 +90,7 @@ long	ft_atol(char *str);
 int		p_isdigit(char *str);
 int		p_strcmp(const char *s1, const char *s2);
 void	ft_usleep(size_t milliseconds);
-void	print_msg(t_data *data, t_philo *phil, char *status);
+void	print_msg(t_philo *phil, char *status);
 size_t	get_current_time(void);
 
 // Parsing functions
