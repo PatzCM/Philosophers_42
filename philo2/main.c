@@ -15,15 +15,14 @@
 int	main(int ac, char **av)
 {
 	t_data	data;
-	int		error;
-
+	int		error = 0;
+	
 	error = p_parsing(ac, av);
 	error = data_init(&data, av, ac);
 	if (error != 0)
 		return (ERROR_PARSING);
 	philo_mutex(&data);
-	if (philo_thread(&data) != 0)
-		return (1);
+	philo_thread(&data);
 }
 
 int philo_thread(t_data *data)
@@ -40,6 +39,9 @@ int philo_thread(t_data *data)
 	data->start_time = now();
 	pthread_mutex_unlock(&data->data);
 	philo_monitor(data);
+	i = -1;
+	while (++i < data->nb_philos)
+		pthread_join(data->philo[i].threads, NULL);
 	return (0);
 }
 

@@ -39,5 +39,4 @@ void	p_free(t_data *data)
 	free(data->thread);
 	free(data->philo);
 	free(data->forks);
-	free(data);
 }

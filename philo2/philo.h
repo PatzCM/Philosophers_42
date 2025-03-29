@@ -53,11 +53,12 @@
 typedef struct s_data
 {
 	int				nb_philos;
-	int				start_time;
+	long long				start_time;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_eat;
+	int				nb_eat_counter;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	data;
@@ -69,7 +70,7 @@ typedef struct s_philo
 	int				id;
 	int				eat_counter;
 	int				full;
-	int				last_eat;
+	long long				last_eat;
 	int				status;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -95,5 +96,6 @@ void	print_msg(t_data *data, char *status);
 void	finalize(t_data *data);
 void	philo_eat(t_philo *philo);
 void	philo_monitor(t_data *data);
+void sleep_time(long long time);
 
 #endif

@@ -27,6 +27,7 @@ int	data_init(t_data *data, char **av, int ac)
 		|| data->time_to_sleep < 60 || (ac == 6 && data->nb_eat < 1))
 		return (ERROR_PARSING);
 	data->start_time = 0;
+	data->nb_eat_counter = 0;
 	philo_init(data);
 	return (0);
 }
@@ -34,20 +35,19 @@ int	data_init(t_data *data, char **av, int ac)
 void	philo_init(t_data *data)
 {
 	int	i;
-
+	i = -1;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_philos);
 	data->philo = malloc(sizeof(t_philo) * data->nb_philos);
 	if (!data->forks || !data->philo)	
 		return (printf("Error: malloc\n"), exit(1));
-	i = 0;
-	while (i < data->nb_philos)
+	while (++i < data->nb_philos)
 	{
 		data->philo[i].id = i + 1;
-		data->philo[i].last_eat = 0;
 		data->philo[i].eat_counter = 0;
-		data->philo[i].status = ALIVE;
 		data->philo[i].full = 0;
-		i++;
+		data->philo[i].last_eat = data->start_time;
+		data->philo[i].status = ALIVE;
+		data->philo[i].data_struct = data;
 	}
 }
 

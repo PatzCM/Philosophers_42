@@ -14,26 +14,25 @@
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;	
+	t_data	data;	
 	int		error;
 	
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (ERROR_MALLOC);
+	/*data = malloc(sizeof(t_data));*/
+	/*if (!data)*/
+	/*	return (ERROR_MALLOC);*/
 	error = 0;
 	error = p_parsing(argc, argv);
 	if (error != 0)
 	{
 		p_error(error);
-		free(data);
+		/*free(data);*/
 		return (PARSING_ERROR);
 	}
-	data_init(data, argv, argc);
-	philo_init(data);
-	philo_mutex(data);
-	if (philo_thread(data) != 0)
-		return (1);
-	p_free(data);
+	data_init(&data, argv, argc);
+	philo_init(&data);
+	philo_mutex(&data);
+	philo_thread(&data);
+	p_free(&data);
 }
 
 int	p_parsing(int ac, char **av)
@@ -92,9 +91,10 @@ int	philo_status(t_philo *philo, t_data *data)
 {
 	int	i;
 	i = 0;
+	pthread_mutex_lock(&data->status);
 	if (get_current_time() - data->philo->last_eat > (size_t)data->time_to_die)
 	{
-		pthread_mutex_lock(&data->status);
+		/*pthread_mutex_lock(&data->status);*/
 		data->philo_dead = DEAD;
 		pthread_mutex_unlock(&data->status);
 		return (DEAD);

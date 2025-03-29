@@ -19,3 +19,12 @@ long long	now(void)
 	gettimeofday(&timeval, NULL);
 	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
 }
+
+void sleep_time(long long time)
+{
+	long long	start;
+
+	start = now();
+	while ((now() - start) < time)
+		usleep(100);
+}
