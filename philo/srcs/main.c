@@ -83,29 +83,29 @@ int	philo_thread(t_data *data)
 	return (0);
 }
 
-int	philo_status(t_philo *philo, t_data *data)
-{
-	int	i;
-	i = 0;
-	pthread_mutex_lock(&data->status);
-	if (get_current_time() - data->philo->last_eat > (size_t)data->time_to_die)
-	{
-		pthread_mutex_unlock(&data->status);
-		pthread_mutex_lock(&data->status);
-		data->philo_dead = DEAD;
-		pthread_mutex_unlock(&data->status);
-		return (DEAD);
-	}
-	else if (philo->eat_count == data->must_eat_count && philo->full == 0)
-	{
-		/*pthread_mutex_lock(&data->status);*/
-		/*printf("philo->eat_count: %d\n", philo->eat_count);*/
-		data->philo_full++;
-		philo->full = 1;
-	}
-	if (data->philo_full == data->philo_count)
-		data->philo_dead = FULL;
-	i = data->philo_dead;
-	pthread_mutex_unlock(&data->status);
-	return (i);
-}
+/*int	philo_status(t_philo *philo, t_data *data)*/
+/*{*/
+/*	int	i;*/
+/*	i = 0;*/
+/*	pthread_mutex_lock(&data->status);*/
+/*	if (get_current_time() - data->philo->last_eat > (size_t)data->time_to_die)*/
+/*	{*/
+/*		pthread_mutex_unlock(&data->status);*/
+/*		pthread_mutex_lock(&data->status);*/
+/*		data->philo_dead = DEAD;*/
+/*		pthread_mutex_unlock(&data->status);*/
+/*		return (DEAD);*/
+/*	}*/
+/*	else if (philo->eat_count == data->must_eat_count && philo->full == 0)*/
+/*	{*/
+/*		pthread_mutex_lock(&data->status);*/
+/*		printf("philo->eat_count: %d\n", philo->eat_count);*/
+/*		data->philo_full++;*/
+/*		philo->full = 1;*/
+/*	}*/
+/*	if (data->philo_full == data->philo_count)*/
+/*		data->philo_dead = FULL;*/
+/*	i = data->philo_dead;*/
+/*	pthread_mutex_unlock(&data->status);*/
+/*	return (i);*/
+/*}*/
