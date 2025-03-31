@@ -30,14 +30,3 @@ size_t	get_current_time(void)
 		write(2, "gettimeofday() error\n", 22);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
-
-void	ft_dsleep(size_t milliseconds, t_data *data)
-{
-	if (milliseconds > get_current_time() - data->time_to_die)
-	{
-		ft_usleep(data->time_to_die);
-		return ;
-	}
-	else
-		ft_usleep(milliseconds);
-}

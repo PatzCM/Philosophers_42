@@ -54,8 +54,8 @@ INFO = \033[36mℹ\033[0m
 CC = gcc
 
 # Compiler flags
-CFLAGS = -g -Wall -Werror -Wextra -fsanitize=thread
-
+CFLAGS = -g -Wall -Werror -Wextra 
+SNTZ = -fsanitize=thread
 # Directory
 DIR = srcs
 # Source files
@@ -96,6 +96,11 @@ fclean: clean
 
 # Rebuild the project
 re: fclean all
+
+san: $(OBJS)
+	@echo "$(INFO) $(CYAN) Linking $(TARGET)... $(RESET)"
+	@$(CC) $(CFLAGS) $(SNTZ) -o $(TARGET) $(OBJS) -lreadline
+	@echo "$(CHECK) $(GREEN) Done! $(RESET)"
 
 # Phony targets
 .PHONY: all clean fclean re

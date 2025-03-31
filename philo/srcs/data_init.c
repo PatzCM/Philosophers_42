@@ -6,7 +6,7 @@
 /*   By: palexand <palexand@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 18:22:26 by palexand          #+#    #+#             */
-/*   Updated: 2025/03/19 16:40:23 by palexand         ###   ########.fr       */
+/*   Updated: 2025/03/15 22:29:43 by palexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../incs/philosophers.h"
@@ -17,14 +17,14 @@ int	data_init(t_data *data, char **argv, int ac)
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
-	data->philo_full = 0;
 	data->philo_dead = ALIVE;
+	data->philo_full = 0;
 	if (ac == 6)
 		data->must_eat_count = ft_atol(argv[5]);
 	else
 		data->must_eat_count = -1;
 	if (allocate_memory(data, data->philo_count) != 0)
-		return (ERROR_MALLOC);
+		return (printf("Error: malloc\n"));
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->status, NULL);
 	data->start_time = 0;

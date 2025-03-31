@@ -27,7 +27,7 @@ void	p_error(int error)
 void	p_free(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->philo_count)
 	{
@@ -39,4 +39,5 @@ void	p_free(t_data *data)
 	free(data->thread);
 	free(data->philo);
 	free(data->forks);
+	free(data);
 }

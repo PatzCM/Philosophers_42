@@ -53,25 +53,27 @@ int	p_isdigit(char *str)
 	return (0);
 }
 
-void	print_msg(t_philo *phil, char *status)
+void	print_msg(t_data *data, t_philo *phil, char *status)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&phil->data->print);
 	time = 0;
-	if (phil->data->philo_dead == ALIVE)
+	pthread_mutex_lock(&data->status);
+	if (data->philo_dead == ALIVE)
 	{
-		time = get_current_time() - phil->data->start_time;
-		printf("%ld %d %s\n", time, phil->id, status);
-		/*pthread_mutex_unlock(&phil->data->print);*/
+		pthread_mutex_lock(&phil->data->print);
+		printf("%ld %d %s\n", get_current_time() - \
+				data->start_time, phil->id, status);
+		pthread_mutex_unlock(&data->print);
 	}
 	else if (p_strcmp(status, "died") == 0)
 	{
-		/*pthread_mutex_lock(&phil->data->print);*/
-		time = get_current_time() - phil->data->start_time;
+		pthread_mutex_lock(&phil->data->print);
+		time = get_current_time() - data->start_time;
 		printf("%ld %d %s\n", time, phil->id, status);
+		pthread_mutex_unlock(&phil->data->print);
 	}
-	pthread_mutex_unlock(&phil->data->print);
+	pthread_mutex_unlock(&data->status);
 }
 
 int	p_strcmp(const char *s1, const char *s2)
